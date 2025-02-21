@@ -2,6 +2,7 @@
 from datetime import datetime
 import threading
 import json
+import os
 app = Flask(__name__)
 file_lock = threading.Lock()
 
@@ -34,5 +35,8 @@ def receive_log():
     print("Received log:", log_data, "Session:", session_id if session_id else "No session")
     return jsonify({"message": "Log received"}), 200
 
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3000, threaded=True)
+    port = int(os.environ.get("PORT", 3000))
+    app.run(host='0.0.0.0', port=port, threaded=True)
+
